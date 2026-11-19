@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<tags>
+  <prop name="factura" add="id,version" values="comprobante,1.1.0" type="padre">
+    <prop name="infoTributaria" type="padre">
+      <prop name="ambiente" type="string" model="db" var="environment" size="1"/>
+      <prop name="tipoEmision" type="fix" value="1"/>
+      <prop name="razonSocial" type="string" model="db" var="name" size="150"/>
+      <prop name="nombreComercial" type="string" model="db" var="name" size="150"/>
+      <prop name="ruc" type="string" model="db" var="ruc" size="13"/>
+      <prop name="claveAcceso" type="string" model="vw" var="clave_acceso" size="50"/>
+      <prop name="codDoc" type="fix" value="01"/>
+      <prop name="estab" type="string" model="vw" var="serie" size="3"/>
+      <prop name="ptoEmi" type="string" model="vw" var="punto_emision" size="3"/>
+      <prop name="secuencial" type="string" model="vw" var="secuencial" size="9"/>
+      <prop name="dirMatriz" type="string" model="db" var="address" size="150"/>
+      <prop name="agenteRetencion" type="string" model="vw" var="agente" size="8"/>
+    </prop>
+    <prop name="infoFactura" type="padre">
+      <prop name="fechaEmision" type="date" model="vw" var="fecha" format="d/m/Y"/>
+      <prop name="dirEstablecimiento" type="string" model="db" var="address" size="150"/>
+      <prop name="obligadoContabilidad" type="string" model="db" var="accounting" size="2"/>
+      <prop name="tipoIdentificacionComprador" type="string" model="vw" var="tipo_ruc" size="2"/>
+      <prop name="razonSocialComprador" type="string" model="vw" var="nombre_cliente" size="100"/>
+      <prop name="identificacionComprador" type="string" model="vw" var="ruc" size="13"/>
+      <prop name="totalSinImpuestos" type="float" model="vw" var="subtotalP" decimal="2"/>
+      <prop name="totalDescuento" type="float" model="vw" var="descuento" decimal="2"/>
+      <prop name="totalConImpuestos" type="padre">
+        <prop name="totalImpuesto" type="padre">
+          <prop name="codigo" type="fix" value="2"/>
+          <prop name="codigoPorcentaje" type="fix" value="0"/>
+          <prop name="baseImponible" type="float" model="vw" var="base_sin_iva" decimal="2"/>
+          <prop name="valor" type="fix" value="0.00"/>
+        </prop>
+        <prop name="totalImpuesto" type="padre">
+          <prop name="codigo" type="fix" value="2"/>
+          <prop name="codigoPorcentaje" type="float" model="vw" var="codigo_iva"/>
+          <prop name="baseImponible" type="float" model="vw" var="base_iva" decimal="2"/>
+          <prop name="valor" type="float" model="vw" var="valor_impuesto" decimal="2"/>
+        </prop>
+      </prop>
+      <prop name="propina" type="fix" value="0.00"/>
+      <prop name="importeTotal" type="float" model="vw" var="total" decimal="2"/>
+      <prop name="moneda" type="fix" value="DOLAR"/>
+      <prop name="pagos" type="array" model="vw" var="pagos">
+        <item name="pago" type="padre">
+          <prop name="formaPago" type="string" model="index" var="codigo_pago" size="4"/>
+          <prop name="total" type="float" model="index" var="total" decimal="2"/>
+          <prop name="plazo" type="string" model="index" var="plazo" size="10"/>
+          <prop name="unidadTiempo" type="string" model="index" var="tiempo" size="20"/>
+        </item>
+      </prop>
+    </prop>
+    <prop name="detalles" type="array" model="vw" var="productos">
+      <item name="detalle" type="padre">
+        <prop name="codigoPrincipal" type="string" model="index" var="codigo_producto" size="50"/>
+        <prop name="descripcion" type="string" model="index" var="descripcion_producto" size="100"/>
+        <prop name="unidadMedida" type="fix" value="UNIDAD"/>
+        <prop name="cantidad" type="float" model="index" var="cantidad" decimal="2"/>
+        <prop name="precioUnitario" type="float" model="index" var="precio_unitario" decimal="4"/>
+        <prop name="descuento" type="float" model="index" var="descuento" decimal="2"/>
+        <prop name="precioTotalSinImpuesto" type="float" model="index" var="precio_venta" decimal="2"/>
+        <prop name="impuestos" type="padre">
+          <prop name="impuesto" type="padre">
+            <prop name="codigo" type="fix" value="2"/>
+            <prop name="codigoPorcentaje" type="float" model="index" var="codigo_iva_p" true="2" false="0"/>
+            <prop name="tarifa" type="float" model="index" var="impuesto" decimal="2"/>
+            <prop name="baseImponible" type="float" model="index" var="precio_venta" decimal="2"/>
+            <prop name="valor" type="float" model="index" var="valor_impuesto" decimal="2"/>
+          </prop>
+        </prop>
+      </item>
+    </prop>
+    <prop name="infoAdicional" type="padre">
+      <prop name="campoAdicional" add="nombre" values="Codigo Cliente" type="string" model="vw" var="codigo_cliente" size="250"/>
+      <prop name="campoAdicional" add="nombre" values="Condicion de Pago" type="string" model="vw" var="condicion_pago" size="150"/>
+      <prop name="campoAdicional" add="nombre" values="Fecha Vencimiento" type="string" model="vw" var="fecha_vencimiento" size="250"/>
+      <prop name="campoAdicional" add="nombre" values="Numero_Pedido" type="string" model="vw" var="numero_pedido" size="150"/>
+      <prop name="campoAdicional" add="nombre" values="Direccion" type="string" model="vw" var="direccion" size="250"/>
+      <prop name="campoAdicional" add="nombre" values="Telefono" type="string" model="vw" var="telefono" size="150"/>
+      <prop name="campoAdicional" add="nombre" values="Email" type="string" model="vw" var="email" size="150"/>
+      <prop name="campoAdicional" add="nombre" values="Ciudad" type="string" model="vw" var="ciudad" size="150"/>
+      <prop name="campoAdicional" add="nombre" values="Vendedor" type="string" model="vw" var="vendedor" size="150"/>
+      <prop name="campoAdicional" add="nombre" values="Forma de Pago" type="string" model="vw" var="forma_pago" size="150"/>
+    </prop>
+  </prop>
+</tags>
